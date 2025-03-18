@@ -129,13 +129,22 @@ class FabricWorkspace:
 
     def _refresh_parameter_file(self) -> None:
         """Load parameters if file is present."""
+        # Import feature_flag here to avoid circular import
+        from fabric_cicd import feature_flag
+
         parameter_file_path = self.repository_directory / "parameter.yml"
         self.environment_parameter = {}
-
+        #
         if parameter_file_path.is_file():
             logger.info(f"Found parameter file '{parameter_file_path}'")
             with parameter_file_path.open(encoding="utf-8") as yaml_file:
-                self.environment_parameter = yaml.safe_load(yaml_file)
+                if "enable_devops_variables" in feature_flag:
+                    replace_dict = yaml.safe_load(yaml_file)
+                    for _k, v in replace_dict["find_replace"].items():
+                        v.update({self.environment: os.environ[v.get(self.environment)]})
+                    self.environment_parameter = replace_dict
+                else:
+                    self.environment_parameter = yaml.safe_load(yaml_file)
 
     def _refresh_repository_items(self) -> None:
         """Refreshes the repository_items dictionary by scanning the repository directory."""
