@@ -29,11 +29,10 @@ from fabric_cicd import feature_flag
 
 # Uncomment to add feature flag
 # append_feature_flag("disable_executing_identity")
-append_feature_flag("enable_devops_variables")
-os.environ["sql_con_ppe_var"] = "104e7ff8-70c7-4e84-a6ad-e4e1f4ecd1b5"
-os.environ["lakehouse_ppe_var"] = "104e7ff8-70c7-4e84-a6ad-e4e1f4ecd1b5"
-os.environ["lakehouse_ppe_workspace"] = "f0e3fa10-e2d7-4ce6-a508-4e6e16ba3a27"
-
+append_feature_flag("enable_deployment_variables")
+os.environ["$ENV:SQL_CON_PPE_VAR"] = "104e7ff8-70c7-4e84-a6ad-e4e1f4ecd1b5"
+os.environ["$ENV:LAKEHOUSE_PPE_VAR"] = "104e7ff8-70c7-4e84-a6ad-e4e1f4ecd1b5"
+os.environ["$ENV:LAKEHOUSE_WORKSPACE_PPE_VAR"] = "f0e3fa10-e2d7-4ce6-a508-4e6e16ba3a27"
 
 # The defined environment values should match the names found in the parameter.yml file
 workspace_id = "f0e3fa10-e2d7-4ce6-a508-4e6e16ba3a27"
