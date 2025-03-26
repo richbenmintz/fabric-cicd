@@ -2,18 +2,6 @@
 
 To handle environment-specific values committed to git, use a `parameter.yml` file. This file supports programmatically changing values based on the `environment` field passed into the `FabricWorkspace` object. If the environment value is not found in the `parameter.yml` file, any dependent replacements will be skipped. This file should sit in the root of the `repository_directory` folder specified in the FabricWorkspace object.
 
-If the `enable_environment_variable_replacement` is set then pipeline variables will be used to replace the values in the `parameter.yml` file with the value of the matching key in the variables dictionary, see example below
-**Only Environment Variable beginnging with '$ENV:' will be used as replacement values**
-
-```yaml
-find_replace:
-    # Lakehouse Connection Guid
-    - find_value: "db52be81-c2b2-4261-84fa-840c67f4bbd0"
-      replace_value:
-        PPE: "$ENV:ppe_lakehouse"
-        PROD: "$ENV:prod_lakehouse"
-```
-
 **Important Notice:** The `parameter.yml` file structure has been recently updated. Please refer to the documentation below for important changes. There is a grace period from **March 24, 2025** to **April 24, 2025** during which the old structure will still be supported, allowing users to migrate to the new structure.
 
 Example of parameter.yml location based on provided repository directory:
@@ -57,6 +45,18 @@ find_replace:
       item_type: <item-type-filter-value>
       item_name: <item-name-filter-value>
       file_path: <file-path-filter-value>
+```
+
+If the `enable_environment_variable_replacement` feature flag is set, pipeline variables will be used to replace the values in the parameter.yml file with the corresponding values from the variables dictionary, see example below:
+**Only Environment Variable beginnging with '$ENV:' will be used as replacement values**
+
+```yaml
+find_replace:
+    # Lakehouse Connection Guid
+    - find_value: "db52be81-c2b2-4261-84fa-840c67f4bbd0"
+      replace_value:
+        PPE: "$ENV:ppe_lakehouse"
+        PROD: "$ENV:prod_lakehouse"
 ```
 
 ### `spark_pool`
@@ -117,6 +117,26 @@ find_replace:
       file_path: # filter on notebook files with these paths
           - "/Hello World.Notebook/notebook-content.py"
           - "\\Goodbye World.Notebook\\notebook-content.py"
+
+    # With enable_deployment_variables feature
+    - find_value: "123e4567-e89b-12d3-a456-426614174000" # Lakehouse Connection GUID
+      replace_value:
+          PPE: "f47ac10b-58cc-4372-a567-0e02b2c3d479" # PPE lakehouse GUID
+          PROD: "9b2e5f4c-8d3a-4f1b-9c3e-2d5b6e4a7f8c" # PROD lakehouse GUID 
+      item_type: "Notebook"
+      item_name: ["Hello World", "Hello World Subfolder"]
+    - find_value: "replace_lakehouse_id"
+      replace_value:
+          PPE: "$ENV:ppe_lakehouse_guid" # Environment Variable Replace
+          PROD: "9b2e5f4c-8d3a-4f1b-9c3e-2d5b6e4a7f8c"
+      item_type: "Notebook"
+      item_name: ["Hello World", "Hello World Subfolder"]
+    - find_value: "replace_lakehouse_workspace"
+      replace_value:
+          PPE: "$ENV:ppe_workspace_guid" # Environment Variable Replace
+          PROD: "9b2e5f4c-8d3a-4f1b-9c3e-2d5b6e4a7f8c"
+      item_type: "Notebook"
+      item_name: ["Hello World", "Hello World Subfolder"]
 
 spark_pool:
     - instance_pool_id: "72c68dbc-0775-4d59-909d-a47896f4573b" # spark_pool_instance_id to be replaced
