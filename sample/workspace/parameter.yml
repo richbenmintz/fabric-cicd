@@ -4,22 +4,12 @@ find_replace:
       replace_value:
         PPE: "81bbb339-8d0b-46e8-bfa6-289a159c0733"
         PROD: "5d6a1b16-447f-464a-b959-45d0fed35ca0"
-    - find_value: "replace_lakehouse_id"
-      replace_value:
-        # Environment Variable Replace
-        PPE: "$ENV:ppe_lakehouse_guid"
-        PROD: "5d6a1b16-447f-464a-b959-45d0fed35ca0"
-    - find_value: "replace_lakehouse_workspace"
-      replace_value:
-        # Environment Variable Replace
-        PPE: "$ENV:ppe_workspace_guid"
-        PROD: "5d6a1b16-447f-464a-b959-45d0fed35ca0"
       # Optional fields:
       item_type: "Notebook"
       item_name: ["Hello World", "Hello World Subfolder"]
-      # file_path:
-      #  - "/Hello World.Notebook/notebook-content.py"
-      #  - "\\subfolder\\Hello World Subfolder.Notebook/notebook-content.py"
+      file_path:
+       - "/Hello World.Notebook/notebook-content.py"
+       - "\\subfolder\\Hello World Subfolder.Notebook/notebook-content.py"
 
 spark_pool:
     # CapacityPool_Large

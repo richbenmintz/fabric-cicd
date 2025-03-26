@@ -117,6 +117,7 @@ class Parameter:
 
                 self.environment_parameter = yaml.full_load(yaml_content)
                 self.environment_parameter = replace_variables_in_parameter_file(self.environment_parameter, self.environment)
+                
                 logger.info(PARAMETER_MSGS["passed"].format("YAML content is valid"))
                 return True, PARAMETER_MSGS["valid load"]
         except yaml.YAMLError as e:
