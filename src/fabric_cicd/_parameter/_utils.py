@@ -15,6 +15,19 @@ from azure.core.credentials import TokenCredential
 
 logger = logging.getLogger(__name__)
 
+def replace_variables_in_parameter_file(parameter_dict: dict, environment: str = "N/A"):
+     # Import feature_flag here to avoid circular import
+    from fabric_cicd import feature_flag
+    if "enable_deployment_variables" in feature_flag:
+        #filter os.environ dict to only allow variables that begin with $VAR:
+        filter = "$ENV:"
+        var_dict = {k: v for k, v in os.environ.items() if filter in k}
+        for _k, v in parameter_dict["find_replace"].items():
+            try:
+                v.update({environment: var_dict[v.get(environment)]})
+            except Exception as e:
+                logger.warning(f"{environment} variable not found.  Raw exception: {e}")
+    return parameter_dict
 
 def validate_parameter_file(
     repository_directory: str,
