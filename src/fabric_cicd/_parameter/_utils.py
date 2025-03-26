@@ -170,7 +170,7 @@ def _convert_value_to_path(repository_directory: Path, input_path: str, validati
             logger_func(f"Relative path '{input_path}' does not exist, provide a valid path")
 
         return absolute_path
-    logger.warning( Path(input_path))
+
     absolute_path = Path(input_path)
     if not absolute_path.exists():
         logger_func(f"Absolute path '{input_path}' does not exist, provide a valid path")
