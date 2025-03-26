@@ -19,6 +19,10 @@ from fabric_cicd import (
     unpublish_all_orphan_items,
 )
 
+# Import feature_flag here to avoid circular import
+from fabric_cicd import feature_flag
+
+append_feature_flag("enable_deployment_variables")
 # Uncomment to enable debug
 # change_log_level()
 
@@ -26,14 +30,15 @@ from fabric_cicd import (
 # append_feature_flag("disable_executing_identity")
 
 # The defined environment values should match the names found in the parameter.yml file
-workspace_id = "8f5c0cec-a8ea-48cd-9da4-871dc2642f4c"
-environment = "dev"
+workspace_id = "f0e3fa10-e2d7-4ce6-a508-4e6e16ba3a27"
+environment = "PPE"
 
 # In this example, our workspace content sits within the root/sample/workspace directory
 repository_directory = str(root_directory / "sample" / "workspace")
 
 # Explicitly define which of the item types we want to deploy
-item_type_in_scope = ["DataPipeline", "Notebook", "Environment", "SemanticModel", "Report"]
+# item_type_in_scope = ["DataPipeline", "Notebook", "Environment", "SemanticModel", "Report"]
+item_type_in_scope = ["Notebook"]
 
 # Uncomment to use SPN auth
 # client_id = "your-client-id"

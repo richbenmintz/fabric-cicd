@@ -9,7 +9,7 @@ import os
 import re
 from pathlib import Path
 from typing import ClassVar
-from _utils import replace_variables_in_parameter_file
+from fabric_cicd._parameter._utils import replace_variables_in_parameter_file
 
 import yaml
 

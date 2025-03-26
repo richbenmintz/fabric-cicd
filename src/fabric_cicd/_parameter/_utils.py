@@ -10,12 +10,14 @@ parameter dictionary structure, processing parameter values, and handling parame
 import logging
 from pathlib import Path
 from typing import Optional, Union
+import os
 
 from azure.core.credentials import TokenCredential
 
 logger = logging.getLogger(__name__)
 
 def replace_variables_in_parameter_file(parameter_dict: dict, environment: str = "N/A"):
+    print(parameter_dict)
      # Import feature_flag here to avoid circular import
     from fabric_cicd import feature_flag
     if "enable_deployment_variables" in feature_flag:
