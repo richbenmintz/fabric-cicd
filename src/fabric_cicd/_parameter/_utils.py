@@ -17,9 +17,16 @@ from azure.core.credentials import TokenCredential
 logger = logging.getLogger(__name__)
 
 def replace_variables_in_parameter_file(parameter_obj: dict, environment: str = "N/A"):
+    """
+    A function to replace tokens in the parameter.yml file with environment variables.
+    
+    Args:
+    parameter_obj: The parameters object
+    environment: The environment being deployed 
+    """
      # Import feature_flag here to avoid circular import
     from fabric_cicd import feature_flag
-    if "enable_deployment_variables" in feature_flag:
+    if "enable_environment_variable_replacement" in feature_flag:
         #filter os.environ dict to only allow variables that begin with $ENV:
         filter = "$ENV:"
         var_dict = {k: v for k, v in os.environ.items() if filter in k}

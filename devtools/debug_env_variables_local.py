@@ -23,7 +23,7 @@ from fabric_cicd import (
 # Import feature_flag here to avoid circular import
 from fabric_cicd import feature_flag
 
-append_feature_flag("enable_deployment_variables")
+append_feature_flag("enable_environment_variable_replacement")
 # Uncomment to enable debug
 # change_log_level()
 

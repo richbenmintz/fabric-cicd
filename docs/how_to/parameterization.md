@@ -2,7 +2,7 @@
 
 To handle environment-specific values committed to git, use a `parameter.yml` file. This file supports programmatically changing values based on the `environment` field passed into the `FabricWorkspace` object. If the environment value is not found in the `parameter.yml` file, any dependent replacements will be skipped. This file should sit in the root of the `repository_directory` folder specified in the FabricWorkspace object.
 
-If the `enable_deployment_variables` is set then pipeline variables will be used to replace the values in the `parameter.yml` file with the value of the matching key in the variables dictionary, see example below
+If the `enable_environment_variable_replacement` is set then pipeline variables will be used to replace the values in the `parameter.yml` file with the value of the matching key in the variables dictionary, see example below
 **Only Environment Variable beginnging with '$ENV:' will be used as replacement values**
 
 ```yaml
