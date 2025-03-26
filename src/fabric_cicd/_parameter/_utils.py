@@ -8,29 +8,31 @@ parameter dictionary structure, processing parameter values, and handling parame
 """
 
 import logging
+import os
 from pathlib import Path
 from typing import Optional, Union
-import os
 
 from azure.core.credentials import TokenCredential
 
 logger = logging.getLogger(__name__)
 
-def replace_variables_in_parameter_file(parameter_obj: dict, environment: str = "N/A"):
+
+def replace_variables_in_parameter_file(parameter_obj: dict, environment: str = "N/A") -> dict:
     """
     A function to replace tokens in the parameter.yml file with environment variables.
-    
+
     Args:
     parameter_obj: The parameters object
-    environment: The environment being deployed 
+    environment: The environment being deployed
     """
-     # Import feature_flag here to avoid circular import
+    # Import feature_flag here to avoid circular import
     from fabric_cicd import feature_flag
+
     if "enable_environment_variable_replacement" in feature_flag:
-        #filter os.environ dict to only allow variables that begin with $ENV:
-        filter = "$ENV:"
-        var_dict = {k: v for k, v in os.environ.items() if filter in k}
-        #block of code to support both variants of the parameters.yml file
+        # filter os.environ dict to only allow variables that begin with $ENV:
+        item_filter = "$ENV:"
+        var_dict = {k: v for k, v in os.environ.items() if item_filter in k}
+        # block of code to support both variants of the parameters.yml file
         if type(parameter_obj["find_replace"]) == dict:
             for _k, v in parameter_obj["find_replace"].items():
                 try:
@@ -45,6 +47,8 @@ def replace_variables_in_parameter_file(parameter_obj: dict, environment: str = 
                     except Exception as e:
                         logger.warning(f"{environment} variable not found.  Raw exception: {e}")
         return parameter_obj
+    return parameter_obj
+
 
 def validate_parameter_file(
     repository_directory: str,

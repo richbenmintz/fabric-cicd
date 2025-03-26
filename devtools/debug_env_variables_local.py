@@ -3,25 +3,24 @@
 
 # The following is intended for developers of fabric-cicd to debug locally against the github repo
 
+import os
 import sys
 from pathlib import Path
-import os
 
 from azure.identity import ClientSecretCredential
 
 root_directory = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(root_directory / "src"))
 
+# Import feature_flag here to avoid circular import
 from fabric_cicd import (
     FabricWorkspace,
     append_feature_flag,
     change_log_level,
+    feature_flag,
     publish_all_items,
     unpublish_all_orphan_items,
 )
-
-# Import feature_flag here to avoid circular import
-from fabric_cicd import feature_flag
 
 append_feature_flag("enable_environment_variable_replacement")
 # Uncomment to enable debug
@@ -44,8 +43,8 @@ sys.path.insert(0, str(root_directory / "src"))
 # item_type_in_scope = ["DataPipeline", "Notebook", "Environment", "SemanticModel", "Report"]
 item_type_in_scope = ["Notebook"]
 
-os.environ['$ENV:ppe_lakehouse_guid']= "104e7ff8-70c7-4e84-a6ad-e4e1f4ecd1b5"
-os.environ['$ENV:ppe_workspace_guid']= "f0e3fa10-e2d7-4ce6-a508-4e6e16ba3a27"
+os.environ["$ENV:ppe_lakehouse_guid"] = "104e7ff8-70c7-4e84-a6ad-e4e1f4ecd1b5"
+os.environ["$ENV:ppe_workspace_guid"] = "f0e3fa10-e2d7-4ce6-a508-4e6e16ba3a27"
 
 # Uncomment to use SPN auth
 # client_id = "your-client-id"
