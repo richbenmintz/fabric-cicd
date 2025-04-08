@@ -227,6 +227,33 @@ class FabricWorkspace:
 
         return raw_file
 
+    # def _replace_key_value(self, raw_file: str, replacements: dict) -> str:
+    #     def replace_in_dict(d):
+    #         updated = {}
+    #         for k, v in d.items():
+    #             if k in replacements:
+    #                 new_key = k
+    #                 new_val = replacements[k][1]
+    #                 updated[new_key] = new_val
+    #             else:
+    #                 updated[k] = v
+    #         return updated
+    #     if isinstance(data, dict):
+    #         return replace_in_dict(data)
+    #     elif isinstance(data, list):
+    #         return [replace_in_dict(item) if isinstance(item, dict) else item for item in data]
+    #     else:
+    #         raise TypeError("Input must be a dict or list of dicts.")
+    #     # json_content = json.loads(raw_file)
+    #     # for json_vars in json_content.get("variables"):
+    #     #     for content_variables in replacements.get("variables"):
+    #     #         if json_vars.get("name") in content_variables.get("name"):
+    #     #             print(json_vars.get("name"))
+    #     #             json_vars["value"] = content_variables.get("value")
+    #     # print(json_content)
+    #     # raw_file = json.dumps(json_content)
+    #     # return ""
+
     def _replace_parameters(self, file_obj: object, item_obj: object) -> str:
         """
         Replaces values found in parameter file with the chosen environment value. Handles two parameter dictionary structures.
@@ -239,6 +266,7 @@ class FabricWorkspace:
             check_parameter_structure,
             check_replacement,
             process_input_path,
+            replace_key_value,
         )
 
         # Parse the file_obj and item_obj
@@ -246,6 +274,39 @@ class FabricWorkspace:
         item_type = item_obj.type
         item_name = item_obj.name
         file_path = file_obj.file_path
+
+        if "variable_libraries" in self.environment_parameter and item_type == "VariableLibrary":
+            for parameter_dict_list in [
+                d for d in self.environment_parameter.get("variable_libraries") if d.get(self.environment) is not None
+            ]:
+                if "variables.json" in file_path.name:
+                    for parameter_dict in parameter_dict_list.get(self.environment):
+                        if item_name == parameter_dict.get("library_name"):
+                            json_content = json.loads(raw_file)
+                            replace_key_value(
+                                json_content.get("variables"),
+                                parameter_dict.get("variables"),
+                                "name",
+                                ["value", "note"],
+                            )
+                            raw_file = json.dumps(json_content)
+                elif "valueSets" in file_path.parts:
+                    for parameter_dict in parameter_dict_list.get(self.environment):
+                        for val_sets in parameter_dict.get("alternate_sets"):
+                            if val_sets.get("set_name") in file_path.name:
+                                json_content = json.loads(raw_file)
+                                replace_key_value(
+                                    json_content.get("variableOverrides"),
+                                    val_sets.get("variables"),
+                                    "name",
+                                    ["value"],
+                                )
+                                # for json_vars in json_content.get("variableOverrides"):
+                                #     for content_variables in val_sets.get("variables"):
+                                #         if json_vars.get("name") in content_variables.get("name"):
+                                #             print(json_vars.get("name"))
+                                #             json_vars["value"] = content_variables.get("value")
+                                raw_file = json.dumps(json_content)
 
         if "find_replace" in self.environment_parameter:
             structure_type = check_parameter_structure(self.environment_parameter, param_name="find_replace")
@@ -380,7 +441,6 @@ class FabricWorkspace:
                             file.contents = self._replace_logical_ids(file.contents)
                             file.contents = self._replace_parameters(file, item)
                             file.contents = self._replace_workspace_ids(file.contents)
-
                     item_payload.append(file.base64_payload)
 
             definition_body = {"definition": {"parts": item_payload}}
