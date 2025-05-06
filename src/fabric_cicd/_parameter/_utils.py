@@ -6,18 +6,16 @@ Following functions are parameter utilities used by the FabricWorkspace and Para
 and for debugging the parameter file. The utilities include validating the parameter.yml file, determining
 parameter dictionary structure, processing parameter values, and handling parameter value replacements.
 """
-
+import json
 import logging
 import os
 from pathlib import Path
 from typing import Optional, Union
 
 from azure.core.credentials import TokenCredential
-
 from jsonpath_ng.ext import parse
 
 import fabric_cicd.constants as constants
-import json
 
 logger = logging.getLogger(__name__)
 
