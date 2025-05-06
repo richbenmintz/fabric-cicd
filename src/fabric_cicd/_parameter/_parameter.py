@@ -35,12 +35,10 @@ class Parameter:
             "minimum": {"instance_pool_id", "replace_value"},
             "maximum": {"instance_pool_id", "replace_value", "item_name"},
         },
-        "spark_pool_replace_value": {
-            "type", "name"
-        },
+        "spark_pool_replace_value": {"type", "name"},
         "key_value_replace": {
-            "minimum": {"item_type", "item_name", "find_items"},
-            "maximum": {"item_type", "item_name", "find_items"},
+            "minimum": {"find_key", "replace_value"},
+            "maximum": {"find_key", "replace_value","item_type", "item_name"},
         },
     }
 
