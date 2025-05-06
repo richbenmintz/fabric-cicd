@@ -11,6 +11,21 @@ find_replace:
        - "/Hello World.Notebook/notebook-content.py"
        - "\\subfolder\\Hello World Subfolder.Notebook/notebook-content.py"
 
+key_value_replace:
+ - item_type: "VariableLibrary"
+   item_name: "Vars"
+   find_items:
+    - find_key: $.variables[?(@.name=="SQL_Server")].value
+      replace_value:
+        PPE: "contoso-ppe.database.windows.net"
+        PROD: "contoso-prod.database.windows.net"
+        UAT: "contoso-uat.database.windows.net"
+    - find_key: $.variables[?(@.name=="Environment")].value
+      replace_value:
+        PPE: "PPE"
+        PROD: "PROD"
+        UAT: "UAT"
+
 spark_pool:
     # CapacityPool_Large
     - instance_pool_id: "72c68dbc-0775-4d59-909d-a47896f4573b"
