@@ -13,10 +13,11 @@ from pathlib import Path
 from typing import Optional, Union
 
 from azure.core.credentials import TokenCredential
-import json
+
 from jsonpath_ng.ext import parse
 
 import fabric_cicd.constants as constants
+import json
 
 logger = logging.getLogger(__name__)
 
