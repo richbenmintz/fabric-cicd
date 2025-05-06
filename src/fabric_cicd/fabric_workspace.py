@@ -299,11 +299,18 @@ class FabricWorkspace:
         item_type = item_obj.type
         item_name = item_obj.name
         file_path = file_obj.file_path
+        
+        if "key_value_replace" in self.environment_parameter and item_type == "VariableLibrary":
+            for parameter_dict_list in [
+                d for d in self.environment_parameter.get("key_value_replace") if d.get("item_name") == item_name
+            ]:
+                if "variables.json" in file_path.name:
+                    raw_file = replace_key_value(parameter_dict_list.get("find_items"), raw_file, self.environment)
 
         if "find_replace" in self.environment_parameter:
             structure_type = check_parameter_structure(self.environment_parameter, param_name="find_replace")
             msg = "Replacing {} with {} in {}.{}"
-
+            
             # Handle new parameter file structure
             if structure_type == "new":
                 for parameter_dict in self.environment_parameter["find_replace"]:
