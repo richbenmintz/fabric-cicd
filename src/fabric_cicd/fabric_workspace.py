@@ -292,6 +292,7 @@ class FabricWorkspace:
             check_parameter_structure,
             check_replacement,
             process_input_path,
+            replace_key_value,
         )
 
         # Parse the file_obj and item_obj
