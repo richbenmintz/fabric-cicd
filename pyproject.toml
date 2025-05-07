@@ -30,7 +30,6 @@ dev = [
     "pytest>=8.3.4",
     "pytest-mock>=3.14.0",
     "ruff>=0.9.5",
-    "jsonpath-ng>=1.7.0",
 ]
 
 [build-system]
