@@ -28,6 +28,18 @@ key_value_replace:
       # Optional fields:
       item_type: "VariableLibrary"
       item_name: "Vars"
+    - find_key: $.variableOverrides[?(@.name=="SQL_Server")].value
+      replace_value:
+        PROD: "contoso-production-override.database.windows.net"
+      file_path: Vars.VariableLibrary/valueSets/PROD.json
+      item_type: "VariableLibrary"
+      item_name: "Vars"
+    - find_key: $.variableOverrides[?(@.name=="Environment")].value
+      replace_value:
+        PROD: "PROD_ENV"
+      file_path: Vars.VariableLibrary/valueSets/PROD.json
+      item_type: "VariableLibrary"
+      item_name: "Vars"
 
 spark_pool:
     # CapacityPool_Large
