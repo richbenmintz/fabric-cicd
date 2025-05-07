@@ -35,13 +35,13 @@ def replace_key_value(param_yaml_content: dict, target_content: str, env: str) -
     except json.JSONDecodeError as jde:
         raise ValueError(jde) from jde
 
-    for rule in param_yaml_content:
-        print(rule)
-        print(rule["find_key"])
-        jsonpath_expr = parse(rule["find_key"])
-        for match in jsonpath_expr.find(data):
-            if env in rule["replace_value"]:
-                match.full_path.update(data, rule["replace_value"][env])
+    jsonpath_expr = parse(param_yaml_content["find_key"])
+    for match in jsonpath_expr.find(data):
+        if env in param_yaml_content["replace_value"]:
+            try:
+                match.full_path.update(data, param_yaml_content["replace_value"][env])
+            except Exception as match_e:
+                raise ValueError(match_e) from match_e
 
     return json.dumps(data)
 
