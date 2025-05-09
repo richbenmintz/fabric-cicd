@@ -300,7 +300,7 @@ class FabricWorkspace:
         item_type = item_obj.type
         item_name = item_obj.name
         file_path = file_obj.file_path
-        
+
         if "key_value_replace" in self.environment_parameter:
             for parameter_dict in self.environment_parameter.get("key_value_replace"):
                 input_type = parameter_dict.get("item_type")
@@ -315,7 +315,7 @@ class FabricWorkspace:
         if "find_replace" in self.environment_parameter:
             structure_type = check_parameter_structure(self.environment_parameter, param_name="find_replace")
             msg = "Replacing {} with {} in {}.{}"
-            
+
             # Handle new parameter file structure
             if structure_type == "new":
                 for parameter_dict in self.environment_parameter["find_replace"]:

@@ -6,6 +6,7 @@ Following functions are parameter utilities used by the FabricWorkspace and Para
 and for debugging the parameter file. The utilities include validating the parameter.yml file, determining
 parameter dictionary structure, processing parameter values, and handling parameter value replacements.
 """
+
 import json
 import logging
 import os
@@ -18,6 +19,7 @@ from jsonpath_ng.ext import parse
 import fabric_cicd.constants as constants
 
 logger = logging.getLogger(__name__)
+
 
 def replace_key_value(param_yaml_content: dict, target_content: str, env: str) -> Union[dict]:
     """A function to replace key values in a JSON string based on the parameter YAML content.
@@ -44,6 +46,7 @@ def replace_key_value(param_yaml_content: dict, target_content: str, env: str) -
                 raise ValueError(match_e) from match_e
 
     return json.dumps(data)
+
 
 def replace_variables_in_parameter_file(raw_file: str) -> str:
     """
