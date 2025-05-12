@@ -38,7 +38,7 @@ class Parameter:
         "spark_pool_replace_value": {"type", "name"},
         "key_value_replace": {
             "minimum": {"find_key", "replace_value"},
-            "maximum": {"find_key", "replace_value", "item_type", "item_name"},
+            "maximum": {"find_key", "replace_value", "item_type", "item_name", "file_path"},
         },
     }
 
