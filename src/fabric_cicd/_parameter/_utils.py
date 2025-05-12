@@ -23,9 +23,6 @@ logger = logging.getLogger(__name__)
 
 def replace_key_value(param_dict: dict, json_content: str, env: str) -> Union[dict]:
     """A function to replace key values in a JSON using parameterization. It uses jsonpath_ng to find and replace values in the JSON.
-    This function uses jsonpath_ng to find and replace values in the JSON string.
-    The function takes a dictionary of parameter YAML content, a target JSON string, and an environment variable
-    to be used for replacement. It returns the modified JSON string.
 
     Args:
         param_dict: The parameter dictionary.
