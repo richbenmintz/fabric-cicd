@@ -21,27 +21,30 @@ import fabric_cicd.constants as constants
 logger = logging.getLogger(__name__)
 
 
-def replace_key_value(param_yaml_content: dict, target_content: str, env: str) -> Union[dict]:
-    """A function to replace key values in a JSON string based on the parameter YAML content.
+def replace_key_value(param_dict: dict, json_content: str, env: str) -> Union[dict]:
+    """A function to replace key values in a JSON using parameterization. It uses jsonpath_ng to find and replace values in the JSON.
     This function uses jsonpath_ng to find and replace values in the JSON string.
     The function takes a dictionary of parameter YAML content, a target JSON string, and an environment variable
     to be used for replacement. It returns the modified JSON string.
 
     Args:
-        param_yaml_content: The parameter YAML content as a dictionary.
-        target_content: The target JSON string to be modified.
+        param_dict: The parameter dictionary.
+        json_content: the JSON content to be modified.
         env: The environment variable to be used for replacement.
     """
+    # Try to load the json content to a dictionary
     try:
-        data = json.loads(target_content)
+        data = json.loads(json_content)
     except json.JSONDecodeError as jde:
         raise ValueError(jde) from jde
 
-    jsonpath_expr = parse(param_yaml_content["find_key"])
+    # Extract the jsonpath expression from the find_key attribute of the param_dict 
+    jsonpath_expr = parse(param_dict["find_key"])
     for match in jsonpath_expr.find(data):
-        if env in param_yaml_content["replace_value"]:
+        # If the env is present in the replace_value array perform the replacement
+        if env in param_dict["replace_value"]:
             try:
-                match.full_path.update(data, param_yaml_content["replace_value"][env])
+                match.full_path.update(data, param_dict["replace_value"][env])
             except Exception as match_e:
                 raise ValueError(match_e) from match_e
 
