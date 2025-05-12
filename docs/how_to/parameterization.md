@@ -233,7 +233,7 @@ display(df)
 
 A Data Pipeline is attached to data sources via the Connection Id.  Connections are not deployed with fabric-cicd and therefore need to be parameterized.  
 
-In the `pipeline-content.json` file, the sql server Connection Id `c517e095-ed87-4665-95fa-8cdb1e751fba`, must be replaced with the corresponding GUIDs of the SQL Server in the target environment (PPE/PROD/etc).
+In the `pipeline-content.json` file, the SQL Server Connection Id `c517e095-ed87-4665-95fa-8cdb1e751fba`, must be replaced with the corresponding GUIDs of the SQL Server in the target environment (PPE/PROD/etc).
 
 This replacement is managed by the `find_key` input in the `parameter.yml` file where fabric-cicd finds every instance of the key within the _specified_ repository files and replaces it with the string for the deployed environment.
 
