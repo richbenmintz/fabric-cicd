@@ -61,7 +61,7 @@ find_replace:
 
 ### `key_value_replace`
 
-For key based replacement operations in json and yaml files. This will look for a specific key using a valid JSONPath expression and replace every found instance in every file. Specify the `find_value` and the `replace_value` for each environment (e.g., PPE, PROD). Optional fields, including `item_type`, `item_name`, and `file_path`, can be used as file filters for more fine-grained control over where the replacement occurs.  Refer to https://jsonpath.com/ for a simple to use JSONPath evaluator.  
+Provides the ability to perform key based replacement operations in JSON and YAML files. This will look for a specific key using a valid JSONPath expression and replace every found instance in every file. Specify the `find_value` and the `replace_value` for each environment (e.g., PPE, PROD). Optional fields, including `item_type`, `item_name`, and `file_path`, can be used as file filters for more fine-grained control over where the replacement occurs.  Refer to https://jsonpath.com/ for a simple to use JSONPath evaluator.  
 
 Note: A common use case for this function is to replace values in key/value file types like Pipelines, Platform files, etc.  e.g., find and replace a connection GUID referenced in a data pipeline.
 
@@ -231,7 +231,7 @@ display(df)
 
 ### Data Pipelines
 
-A Data Pipeline is attached to data sources via the Connection Id.  Connections are not deployed with fabric-cicd and therefor need to be parameterized.  
+A Data Pipeline is attached to data sources via the Connection Id.  Connections are not deployed with fabric-cicd and therefore need to be parameterized.  
 
 In the `pipeline-content.json` file, the sql server Connection Id `c517e095-ed87-4665-95fa-8cdb1e751fba`, must be replaced with the corresponding GUIDs of the SQL Server in the target environment (PPE/PROD/etc).
 
@@ -246,7 +246,7 @@ find_replace:
           PPE: "f47ac10b-58cc-4372-a567-0e02b2c3d479" # PPE SQL Connection GUID
           PROD: "9b2e5f4c-8d3a-4f1b-9c3e-2d5b6e4a7f8c" # PPE SQL Connection GUID
       item_type: "Data Pipeline" # filter on Data Pipelines files
-      item_name: ["Copy Data"] # filter on specific Data Pipelines files
+      item_name: "Example Pipeline" # filter on specific Data Pipelines files
 ```
 
 <span class="md-h4-nonanchor">pipeline-content.json file</span>
