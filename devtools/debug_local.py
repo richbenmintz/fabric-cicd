@@ -35,29 +35,29 @@ repository_directory = str(root_directory / "sample" / "workspace")
 
 # Explicitly define which of the item types we want to deploy
 item_type_in_scope = [
-    # "Lakehouse",
-    # "VariableLibrary",
-    # "Dataflow",
-    # "DataPipeline",
-    # "Notebook",
-    # "Environment",
-    # "SemanticModel",
-    # "Report",
-    # "Eventhouse",
-    # "KQLDatabase",
-    # "KQLQueryset",
-    # "Reflex",
-    # "Eventstream",
+    "Lakehouse",
+    "VariableLibrary",
+    "Dataflow",
+    "DataPipeline",
+    "Notebook",
+    "Environment",
+    "SemanticModel",
+    "Report",
+    "Eventhouse",
+    "KQLDatabase",
+    "KQLQueryset",
+    "Reflex",
+    "Eventstream",
     "MLExperiment",
 ]
 
 # Uncomment to use SPN auth
-client_id = "c34c682a-c8a1-43a6-8b27-29f0a2ff2fb9"
-client_secret = "sQq8Q~nv9Pl1Lxt-Za41Uc89NyITy04yY2FORcrR"
-tenant_id = "31d5acce-99ba-40b7-b2a1-f329e04fe742"
-token_credential = ClientSecretCredential(client_id=client_id, client_secret=client_secret, tenant_id=tenant_id)
+# client_id = "your-client-id"
+# client_secret = "your-client-secret"
+# tenant_id = "your-tenant-id"
+# token_credential = ClientSecretCredential(client_id=client_id, client_secret=client_secret, tenant_id=tenant_id)
 
-constants.DEFAULT_API_ROOT_URL = "https://api.fabric.microsoft.com"
+constants.DEFAULT_API_ROOT_URL = "https://msitapi.fabric.microsoft.com"
 
 # Initialize the FabricWorkspace object with the required parameters
 target_workspace = FabricWorkspace(
@@ -66,7 +66,7 @@ target_workspace = FabricWorkspace(
     repository_directory=repository_directory,
     item_type_in_scope=item_type_in_scope,
     # Uncomment to use SPN auth
-    token_credential=token_credential,
+    # token_credential=token_credential,
 )
 
 # Uncomment to publish
